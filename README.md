@@ -9,8 +9,8 @@ In this manuscript, we rewrite the coordinates used to describe the Wright-Fishe
 
 Run this to clone and enter the directory with the code:
 ```bash
-git clone https://github.com/steinrue/two_locus_moments.git
-cd two_locus_moments/public_code
+git clone https://github.com/steinrue/two_locus_closure.git
+cd two_locus_closure
 ```
 
 ## Usage
