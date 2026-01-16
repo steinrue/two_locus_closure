@@ -80,7 +80,7 @@ for spine in cbar.ax.spines.values():
 plt.suptitle('Pop. Size: Constant', fontsize=18)
 fig_filename = os.path.join(variables.figDir, 'constant_pTempDyn.pdf')
 plt.savefig(fig_filename, format='pdf', bbox_inches='tight')
-plt.show()
+# plt.show()
 
 # Bottleneck Population
 
@@ -148,7 +148,7 @@ for spine in cbar.ax.spines.values():
 plt.suptitle('Pop. Size: Bottleneck', fontsize=18)
 fig_filename = os.path.join(variables.figDir, 'bottleneck_pTempDyn.pdf')
 plt.savefig(fig_filename, format='pdf', bbox_inches='tight')
-plt.show()
+# plt.show()
 
 # Exp. Growth Population
 
@@ -216,4 +216,4 @@ for spine in cbar.ax.spines.values():
 plt.suptitle('Pop. Size: Exp. Growth', fontsize=18)
 fig_filename = os.path.join(variables.figDir, 'expGrowth_pTempDyn.pdf')
 plt.savefig(fig_filename, format='pdf', bbox_inches='tight')
-plt.show()
+# plt.show()

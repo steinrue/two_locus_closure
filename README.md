@@ -1,6 +1,6 @@
 # General Moment Closure for Two-Locus Wright-Fisher Dynamics
 
-This repository contains the code to run the analyses and create the figures for the manuscript
+This repository contains the code to run the analyses and create the figures for the manuscript:
 >   Kundragami, R., Yetter, S., and Steinrücken, M. (2025) General moment closure for the neutral two-locus Wright-Fisher dynamics. https://doi.org/xyz
 
 In this manuscript, we rewrite the coordinates used to describe the Wright-Fisher diffusion of allele frequencies for two loci. We rederive the generator of the process in these coordinates, and show that the moment equations for genetic drift, recurrent mutation, and recombination close in this new coordinate system. Accordingly, we are able to numerically integrate the system of ODEs arising from these moment equations. This code performs these integrals and other simulations, producing the figures from the manuscript to demostrate the accuracy and efficiency of this framework.
@@ -19,7 +19,7 @@ The process of generating the figures for the main text has been streamlined in 
 ```bash
 python variables.py
 ```
-Now, the following figures can be produced by running the corresponding scripts. All corresponding figures will be saved to your local machine in a folder called figures within public_code. Each time you run these files, the existing pdf of a figure will be overwritten by the new figure produced.
+Now, the following figures can be produced by running the corresponding scripts. All corresponding figures will be saved to your local machine in the subdirectory `figures/`. Each time you run these files, the existing pdf of a figure will be overwritten by the new figure produced.
 
 Figures 2-5 (population size history plot and trajectories of statistics of interest):
 ```bash

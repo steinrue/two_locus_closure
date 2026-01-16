@@ -73,7 +73,7 @@ for i, r in enumerate(rs):
 plt.tight_layout()
 fig_filename = os.path.join(variables.figDir, 'MarginalIndependenceConvex.pdf')
 plt.savefig(fig_filename, format='pdf', bbox_inches='tight')
-plt.show()
+# plt.show()
 
 # High u
 commonMu = variables.highMu
@@ -133,7 +133,7 @@ for i, r in enumerate(rs):
 plt.tight_layout()
 fig_filename = os.path.join(variables.figDir, 'MarginalIndependenceConcave.pdf')
 plt.savefig(fig_filename, format='pdf', bbox_inches='tight')
-plt.show()
+# plt.show()
 
 # Calculate and Print the MI values
 

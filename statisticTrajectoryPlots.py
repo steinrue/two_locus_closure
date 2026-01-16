@@ -76,7 +76,7 @@ plt.subplots_adjust(wspace=0.2, hspace=0.425)
 plt.tight_layout()
 fig_filename = os.path.join(variables.figDir, 'ConstantStatTraj.pdf')
 plt.savefig(fig_filename, format='pdf', bbox_inches='tight')
-plt.show()
+# plt.show()
 
 # Bottleneck Population
 
@@ -131,7 +131,7 @@ plt.subplots_adjust(wspace=0.2, hspace=0.425)
 plt.tight_layout()
 fig_filename = os.path.join(variables.figDir, 'BottleneckStatTraj.pdf')
 plt.savefig(fig_filename, format='pdf', bbox_inches='tight')
-plt.show()
+# plt.show()
 
 # Exp. Growth
 
@@ -187,4 +187,4 @@ plt.subplots_adjust(wspace=0.2, hspace=0.425)
 plt.tight_layout()
 fig_filename = os.path.join(variables.figDir, 'ExpGrowthStatTraj.pdf')
 plt.savefig(fig_filename, format='pdf', bbox_inches='tight')
-plt.show()
+# plt.show()

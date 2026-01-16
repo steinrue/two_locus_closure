@@ -96,7 +96,7 @@ for i, demo in enumerate(variables.demos):
 plt.tight_layout()
 fig_filename = os.path.join(variables.figDir, 'ODEvsMsprime.pdf')
 plt.savefig(fig_filename, format='pdf', bbox_inches='tight')
-plt.show()
+# plt.show()
 
 # Plot relative error for each bin, trating the ODE as 'truth'
 fig, axs = plt.subplots(2, 3, figsize=(27, 18))
@@ -121,7 +121,7 @@ for i, demo in enumerate(variables.demos):
 plt.tight_layout()
 fig_filename = os.path.join(variables.figDir, 'RelErrorODETruth.pdf')
 plt.savefig(fig_filename, format='pdf', bbox_inches='tight')
-plt.show()
+# plt.show()
 
 # Plot monte carlo errors in simulation for each demography
 fig, axs = plt.subplots(2, 3, figsize=(27, 18))
@@ -134,7 +134,7 @@ for i, demo in enumerate(variables.demos):
 plt.tight_layout()
 fig_filename = os.path.join(variables.figDir, 'MonteCarloError.pdf')
 plt.savefig(fig_filename, format='pdf', bbox_inches='tight')
-plt.show()
+# plt.show()
 
 # Compute JS Divergence and TV Distance Between pairs of heatmaps for each demo
 for demo in variables.demos:

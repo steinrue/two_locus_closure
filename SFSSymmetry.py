@@ -55,4 +55,4 @@ for i, scenario in enumerate(ICs):
 plt.tight_layout()
 fig_filename = os.path.join(variables.figDir, 'SFSSymmetry.pdf')
 plt.savefig(fig_filename, format='pdf', bbox_inches='tight')
-plt.show()
+# plt.show()
