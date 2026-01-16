@@ -1,3 +1,4 @@
+
 # General Moment Closure for Two-Locus Wright-Fisher Dynamics
 
 This repository contains the code to run the analyses and create the figures for the manuscript:
@@ -12,6 +13,7 @@ Run this to clone and enter the directory with the code:
 git clone https://github.com/steinrue/two_locus_closure.git
 cd two_locus_closure
 ```
+To run the scripts, the modules `numpy`, `scipy`, `seaborn`, `pickle`, `bz2`, `matplotlib`, `string` and `msprime` need to be available in python.
 
 ## Usage
 
