@@ -14,7 +14,7 @@ initialStates = [(2,0,0), (0,2,0), (0,0,2), (2,2,2)]
 order = 8
 time = np.linspace(0,2000,200)
 numGenerations = 2000
-numReplicates = 2048
+numReplicates = 8192
 numGeneticTypes = 4
 
 # IC Lists

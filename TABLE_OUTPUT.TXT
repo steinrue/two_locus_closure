@@ -1,0 +1,42 @@
+TVD Between ODE and $M_p$ for constant - $1.35 \cdot 10^{-3}$
+JSD Between ODE and $M_p$ for constant - $2.2 \cdot 10^{-6}$
+TVD Between ODE and $M_g$ for constant - $1.31 \cdot 10^{-3}$
+JSD Between ODE and $M_g$ for constant - $2.01 \cdot 10^{-6}$
+TVD Between $M_p$ and $M_g$ for constant - $2.04 \cdot 10^{-3}$
+JSD Between $M_p$ and $M_g$ for constant - $5.28 \cdot 10^{-6}$
+TVD Between ODE and $M_p$ for bottleneck - $1.08 \cdot 10^{-3}$
+JSD Between ODE and $M_p$ for bottleneck - $1.46 \cdot 10^{-6}$
+TVD Between ODE and $M_g$ for bottleneck - $3.64 \cdot 10^{-3}$
+JSD Between ODE and $M_g$ for bottleneck - $1.57 \cdot 10^{-5}$
+TVD Between $M_p$ and $M_g$ for bottleneck - $3.51 \cdot 10^{-3}$
+JSD Between $M_p$ and $M_g$ for bottleneck - $1.75 \cdot 10^{-5}$
+TVD Between ODE and $M_p$ for expGrowth - $1.43 \cdot 10^{-3}$
+JSD Between ODE and $M_p$ for expGrowth - $2.45 \cdot 10^{-6}$
+TVD Between ODE and $M_g$ for expGrowth - $4.79 \cdot 10^{-3}$
+JSD Between ODE and $M_g$ for expGrowth - $2.36 \cdot 10^{-5}$
+TVD Between $M_p$ and $M_g$ for expGrowth - $5.37 \cdot 10^{-3}$
+JSD Between $M_p$ and $M_g$ for expGrowth - $3.03 \cdot 10^{-5}$
+r = 0, u = 5e-05, constant, Mutual Information between X_1 and X_2:
+0.006382398339507425
+r = 0.5, u = 5e-05, constant, Mutual Information between X_1 and X_2:
+2.1780962417299804e-10
+r = 0, u = 0.0002, constant, Mutual Information between X_1 and X_2:
+0.0017145572937526956
+r = 0.5, u = 0.0002, constant, Mutual Information between X_1 and X_2:
+8.887540802639255e-10
+r = 0, u = 5e-05, bottleneck, Mutual Information between X_1 and X_2:
+0.011264342132413901
+r = 0.5, u = 5e-05, bottleneck, Mutual Information between X_1 and X_2:
+2.2709435224472874e-10
+r = 0, u = 0.0002, bottleneck, Mutual Information between X_1 and X_2:
+0.002765773294066046
+r = 0.5, u = 0.0002, bottleneck, Mutual Information between X_1 and X_2:
+6.867734333838072e-10
+r = 0, u = 5e-05, expGrowth, Mutual Information between X_1 and X_2:
+0.0011845850676377011
+r = 0.5, u = 5e-05, expGrowth, Mutual Information between X_1 and X_2:
+4.054762747374018e-12
+r = 0, u = 0.0002, expGrowth, Mutual Information between X_1 and X_2:
+0.0006223775155583963
+r = 0.5, u = 0.0002, expGrowth, Mutual Information between X_1 and X_2:
+4.164036348252284e-12
