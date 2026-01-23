@@ -2,7 +2,7 @@
 # General Moment Closure for Two-Locus Wright-Fisher Dynamics
 
 This repository contains the code to run the analyses and create the figures for the manuscript:
->   Kundragami, R., Yetter, S., and Steinrücken, M. (2025) General moment closure for the neutral two-locus Wright-Fisher dynamics. https://doi.org/xyz
+>   Kundragami, R., Yetter, S., and Steinrücken, M. (2025) General moment closure for the neutral two-locus Wright-Fisher dynamics. <em>bioRxiv</em>. [https://doi.org/10.64898/2026.01.16.700021](https://doi.org/10.64898/2026.01.16.700021)
 
 In this manuscript, we rewrite the coordinates used to describe the Wright-Fisher diffusion of allele frequencies for two loci. We rederive the generator of the process in these coordinates, and show that the moment equations for genetic drift, recurrent mutation, and recombination close in this new coordinate system. Accordingly, we are able to numerically integrate the system of ODEs arising from these moment equations. This code performs these integrals and other simulations, producing the figures from the manuscript to demostrate the accuracy and efficiency of this framework.
 
