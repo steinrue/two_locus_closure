@@ -114,44 +114,79 @@ def computeStationaryStatistics(thisPopScenario, initialStates, order, perGenRec
 
 def computeSimulatedStatistics(thisInitScenario, thisPopScenario, numReplicates, numGenerations, numGeneticTypes, rho, commonMu, WD):
 
-    simulatedTrajectories = getSimulatedTrajectories(thisInitScenario, thisPopScenario, numReplicates, numGenerations, numGeneticTypes, rho, commonMu)
+    # chunk numReplicates into batches to be able to print progress update and prevent memory issues
+    numBatches = 25
+    batchSize = max(1, numReplicates//numBatches)
 
-    # first locus
-    # X1
-    margOne = simulatedTrajectories[:,:,0] + simulatedTrajectories[:,:,1]
-    meanOne = numpy.mean (margOne, axis=0)
-    sdOne = numpy.std (margOne, axis=0)
+    sumOne = numpy.zeros(numGenerations)
+    sumOneSq = numpy.zeros(numGenerations)
+    sumHetOne = numpy.zeros(numGenerations)
+    sumHetOneSq = numpy.zeros(numGenerations)
+    sumTwo = numpy.zeros(numGenerations)
+    sumTwoSq = numpy.zeros(numGenerations)
+    sumHetTwo = numpy.zeros(numGenerations)
+    sumHetTwoSq = numpy.zeros(numGenerations)
+    # required values to store to compute mean and sd of D and D^2
+    sumD = numpy.zeros(numGenerations)
+    sumD2 = numpy.zeros(numGenerations)
+    sumD4 = numpy.zeros(numGenerations)
 
-    # 2*X1*(1-X1)
-    hetOne = 2 * margOne * (1-margOne)
-    meanHetOne = numpy.mean (hetOne, axis=0)
-    sdHetOne = numpy.std (hetOne, axis=0)
+    completedReplicates = 0
+    while completedReplicates < numReplicates:
+        thisBatchSize = min(batchSize, numReplicates - completedReplicates)
+        batchSims = getSimulatedTrajectories(thisInitScenario, thisPopScenario, thisBatchSize, numGenerations, numGeneticTypes, rho, commonMu)
 
-    # second locus
-    # X2
-    margTwo = simulatedTrajectories[:,:,0] + simulatedTrajectories[:,:,2]
-    meanTwo = numpy.mean (margTwo, axis=0)
-    sdTwo = numpy.std (margTwo, axis=0)
+        # first locus
+        margOne = batchSims[:,:,0] + batchSims[:,:,1]
+        sumOne += numpy.sum(margOne, axis=0)
+        sumOneSq += numpy.sum(margOne**2, axis=0)
+ 
+        hetOne = 2 * margOne * (1 - margOne)
+        sumHetOne += numpy.sum(hetOne, axis=0)
+        sumHetOneSq += numpy.sum(hetOne**2, axis=0)
+ 
+        # second locus
+        margTwo = batchSims[:,:,0] + batchSims[:,:,2]
+        sumTwo += numpy.sum(margTwo, axis=0)
+        sumTwoSq += numpy.sum(margTwo**2, axis=0)
+ 
+        hetTwo = 2 * margTwo * (1 - margTwo)
+        sumHetTwo += numpy.sum(hetTwo, axis=0)
+        sumHetTwoSq += numpy.sum(hetTwo**2, axis=0)
 
-    # 2*X2*(1-X2)
-    hetTwo = 2 * margTwo * (1-margTwo)
-    meanHetTwo = numpy.mean (hetTwo, axis=0)
-    sdHetTwo = numpy.std (hetTwo, axis=0)
+        # LD, vectorized across all generations in batch
+        thisNumRep, thisNumGen, thisNumTypes = batchSims.shape
+        flatFreqs = batchSims.transpose(1, 0, 2).reshape(thisNumRep * thisNumGen, thisNumTypes)
+        flatD = LD(flatFreqs)[:, 0]
+        batchD = flatD.reshape(thisNumGen, thisNumRep).T
+ 
+        sumD += numpy.sum(batchD, axis=0)
+        sumD2 += numpy.sum(batchD**2, axis=0)
+        sumD4 += numpy.sum(batchD**4, axis=0)
 
-    # LD stuff
-    allLD = numpy.zeros ((simulatedTrajectories.shape[0], simulatedTrajectories.shape[1]))
-    for genIdx in numpy.arange(simulatedTrajectories.shape[1]):
-        allLD[:,genIdx] = LD(simulatedTrajectories[:,genIdx,:])[:,0]
-    meanLD = numpy.mean (allLD, axis=0)
-    sdLD = numpy.std (allLD, axis=0)
+        completedReplicates += thisBatchSize
+        percentDone = 100*(completedReplicates/numReplicates)
+        print(f'-- {thisPopScenario} -- {thisInitScenario} -- {percentDone:.1f}% complete --')
 
-    # LD^2 stuff
-    allLDSQ = numpy.zeros ((simulatedTrajectories.shape[0], simulatedTrajectories.shape[1]))
-    for genIdx in numpy.arange(simulatedTrajectories.shape[1]):
-        allLDSQ[:,genIdx] = LD(simulatedTrajectories[:,genIdx,:])[:,0]
-        allLDSQ[:,genIdx] = allLDSQ[:,genIdx] * allLDSQ[:,genIdx]
-    meanLDSQ = numpy.mean (allLDSQ, axis=0)
-    sdLDSQ = numpy.std (allLDSQ, axis=0)
+    n = numReplicates
+ 
+    meanOne = sumOne / n
+    sdOne = numpy.sqrt(numpy.clip(sumOneSq/n - meanOne**2, 0, None))
+ 
+    meanHetOne = sumHetOne / n
+    sdHetOne = numpy.sqrt(numpy.clip(sumHetOneSq/n - meanHetOne**2, 0, None))
+ 
+    meanTwo = sumTwo / n
+    sdTwo = numpy.sqrt(numpy.clip(sumTwoSq/n - meanTwo**2, 0, None))
+ 
+    meanHetTwo = sumHetTwo / n
+    sdHetTwo = numpy.sqrt(numpy.clip(sumHetTwoSq/n - meanHetTwo**2, 0, None))
+ 
+    meanLD = sumD / n
+    sdLD = numpy.sqrt(numpy.clip(sumD2/n - meanLD**2, 0, None))
+ 
+    meanLDSQ = sumD2 / n
+    sdLDSQ = numpy.sqrt(numpy.clip(sumD4/n - meanLDSQ**2, 0, None))
 
     simulatedData = {'meanOne' : meanOne,
     'sdOne' : sdOne,
@@ -209,18 +244,28 @@ def computeOdeHigherOrderTrajectories(thisInitScenario, thisPopScenario, initial
 
 def computeSimHigherOrderTrajectories(thisInitScenario, thisPopScenario, order, numReplicates, numGenerations, numGeneticTypes, rho, commonMu, WD):
     
-    simulatedTrajectories = getSimulatedTrajectories(thisInitScenario, thisPopScenario, numReplicates, numGenerations, numGeneticTypes, rho, commonMu)
+    # batch to print progress updates and prevent memory issue
+    numBatches = 25
+    batchSize = max(1, numReplicates//numBatches)
 
-    simulatedHigherOrderTrajectories = {}
+    sumHigherOrder = {(dA, dB): numpy.zeros(numGenerations) for dA in numpy.arange(0, order+1) for dB in numpy.arange(0, order+1)}
 
+    completedReplicates = 0
+    while completedReplicates < numReplicates:
+        thisBatchSize = min(batchSize, numReplicates - completedReplicates)
+        batchSims = getSimulatedTrajectories(thisInitScenario, thisPopScenario, thisBatchSize, numGenerations, numGeneticTypes, rho, commonMu)
 
-    for dA in numpy.arange(0,order + 1):
-        for dB in numpy.arange(0,order + 1):
-            simulatedHigherOrderTrajectories[(dA,dB)] = numpy.mean(sum(multinomial([nAB, dA - nAB, dB - nAB, order + nAB - dA - dB]) * simulatedTrajectories[:,:,0]**(nAB) * simulatedTrajectories[:,:,1]**(dA - nAB) *
-                    simulatedTrajectories[:,:,2]**(dB - nAB) * simulatedTrajectories[:,:,3]**(order + nAB - dA - dB)  
-                    for nAB in range(max(0,dA + dB - order) , min(dA,dB) + 1)), axis = 0)
-            
-    
+        for dA in numpy.arange(0, order+1):
+            for dB in numpy.arange(0, order+1):
+                batchVals = sum(multinomial([nAB, dA - nAB, dB - nAB, order + nAB - dA - dB]) * batchSims[:,:,0]**(nAB) * batchSims[:,:,1]**(dA - nAB) *
+                                batchSims[:,:,2]**(dB - nAB) * batchSims[:,:,3]**(order + nAB - dA - dB) for nAB in range(max(0,dA + dB - order), min(dA,dB) + 1))
+                sumHigherOrder[(dA, dB)] += numpy.sum(batchVals, axis=0)
+
+        completedReplicates += thisBatchSize
+        percentDone = 100*(completedReplicates/numReplicates)
+        print(f'-- {thisPopScenario} -- {thisInitScenario} -- {percentDone:.1f}% complete --')
+
+    simulatedHigherOrderTrajectories = {pair : sumVal/numReplicates for pair, sumVal in sumHigherOrder.items()}
     
     filename = WD + f'/sim.{thisInitScenario}.{thisPopScenario}.u={commonMu}.r={rho}.higherOrder={order}.pkl.bz2'
     

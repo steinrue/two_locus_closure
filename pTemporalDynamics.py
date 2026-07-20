@@ -6,7 +6,6 @@ import pickle
 import bz2
 import matplotlib.pyplot as plt
 import seaborn
-import string
 from compute_statistics import computeOdeHigherOrderTrajectories, computeSimHigherOrderTrajectories
 import variables
 
@@ -42,16 +41,29 @@ colors = plt.cm.tab10.colors
 cmap = {pair: colors[i % len(colors)] for i, pair in enumerate(pairs)}
 
 for pair in pairs:
-  color = cmap[pair]
-  ax1.plot(variables.time, odeHigherOrderData[pair], label={pair}, color=color)
-  ax1.plot(np.arange(variables.numGenerations), simHigherOrderData[pair], linestyle = ':', color=color)
-  ax1.tick_params(labelsize=14)
+    color = cmap[pair]
+    ax1.plot(variables.time, odeHigherOrderData[pair], label={pair}, color=color)
+    ax1.tick_params(labelsize=14)
+
+for idx, pair in enumerate(pairs):
+    color = cmap[pair]
+    # plot subsample of simulated trajectory for visibility
+    sim_time = np.arange(variables.numGenerations)
+    sim_vals = simHigherOrderData[pair]
+    num_subsample = 16
+    # stagger crosses
+    base_locs = np.linspace(0, variables.numGenerations - 1, num_subsample)
+    width = variables.numGenerations / (num_subsample*len(pairs))
+    stagger = idx*width
+    subsample_idx = np.round((base_locs+stagger) % variables.numGenerations).astype(int)
+    subsample_idx = np.sort(subsample_idx)
+    ax1.plot(sim_time[subsample_idx], sim_vals[subsample_idx], marker='x', linestyle='None', color=color, markersize=10)
 
 ax1.set_xlabel('Generations', fontsize=14)
 ax1.set_ylabel(r'$p_t^8(d^{(1)},d^{(2)})$', fontsize=14)
 
 chandles = [ax1.plot([], [], color = cmap[pair], label={pair})[0] for pair in pairs]
-handles = [ax1.plot([], [], color='black', linestyle='-', label='ODE')[0], ax1.plot([], [], color='black', linestyle=':', label='Simulation')[0]]
+handles = [ax1.plot([], [], color='black', linestyle='-', label='ODE')[0], ax1.plot([], [], color='black', marker='x', linestyle='None', label='Simulation')[0]]
 
 legend1 = ax1.legend(handles=chandles, loc='lower center', title=r'$(d^{(1)}, d^{(2)})$', bbox_to_anchor=(0.5, -0.35), ncol=5, fontsize=13, title_fontsize=14)
 ax1.add_artist(legend1)
@@ -110,16 +122,29 @@ colors = plt.cm.tab10.colors
 cmap = {pair: colors[i % len(colors)] for i, pair in enumerate(pairs)}
 
 for pair in pairs:
-  color = cmap[pair]
-  ax1.plot(variables.time, odeHigherOrderData[pair], label={pair}, color=color)
-  ax1.plot(np.arange(variables.numGenerations), simHigherOrderData[pair], linestyle = ':', color=color)
-  ax1.tick_params(labelsize=14)
+    color = cmap[pair]
+    ax1.plot(variables.time, odeHigherOrderData[pair], label={pair}, color=color)
+    ax1.tick_params(labelsize=14)
+
+for idx, pair in enumerate(pairs):
+    color = cmap[pair]
+    # plot subsample of simulated trajectory for visibility
+    sim_time = np.arange(variables.numGenerations)
+    sim_vals = simHigherOrderData[pair]
+    num_subsample = 16
+    # stagger crosses
+    base_locs = np.linspace(0, variables.numGenerations - 1, num_subsample)
+    width = variables.numGenerations / (num_subsample*len(pairs))
+    stagger = idx*width
+    subsample_idx = np.round((base_locs+stagger) % variables.numGenerations).astype(int)
+    subsample_idx = np.sort(subsample_idx)
+    ax1.plot(sim_time[subsample_idx], sim_vals[subsample_idx], marker='x', linestyle='None', color=color, markersize=10)
 
 ax1.set_xlabel('Generations', fontsize=14)
 ax1.set_ylabel(r'$p_t^8(d^{(1)},d^{(2)})$', fontsize=14)
 
 chandles = [ax1.plot([], [], color = cmap[pair], label={pair})[0] for pair in pairs]
-handles = [ax1.plot([], [], color='black', linestyle='-', label='ODE')[0], ax1.plot([], [], color='black', linestyle=':', label='Simulation')[0]]
+handles = [ax1.plot([], [], color='black', linestyle='-', label='ODE')[0], ax1.plot([], [], color='black', marker='x', linestyle='None', label='Simulation')[0]]
 
 legend1 = ax1.legend(handles=chandles, loc='lower center', title=r'$(d^{(1)}, d^{(2)})$', bbox_to_anchor=(0.5, -0.35), ncol=5, fontsize=13, title_fontsize=14)
 ax1.add_artist(legend1)
@@ -178,16 +203,29 @@ colors = plt.cm.tab10.colors
 cmap = {pair: colors[i % len(colors)] for i, pair in enumerate(pairs)}
 
 for pair in pairs:
-  color = cmap[pair]
-  ax1.plot(variables.time, odeHigherOrderData[pair], label={pair}, color=color)
-  ax1.plot(np.arange(variables.numGenerations), simHigherOrderData[pair], linestyle = ':', color=color)
-  ax1.tick_params(labelsize=14)
+    color = cmap[pair]
+    ax1.plot(variables.time, odeHigherOrderData[pair], label={pair}, color=color)
+    ax1.tick_params(labelsize=14)
+
+for idx, pair in enumerate(pairs):
+    color = cmap[pair]
+    # plot subsample of simulated trajectory for visibility
+    sim_time = np.arange(variables.numGenerations)
+    sim_vals = simHigherOrderData[pair]
+    num_subsample = 16
+    # stagger crosses
+    base_locs = np.linspace(0, variables.numGenerations - 1, num_subsample)
+    width = variables.numGenerations / (num_subsample*len(pairs))
+    stagger = idx*width
+    subsample_idx = np.round((base_locs+stagger) % variables.numGenerations).astype(int)
+    subsample_idx = np.sort(subsample_idx)
+    ax1.plot(sim_time[subsample_idx], sim_vals[subsample_idx], marker='x', linestyle='None', color=color, markersize=10)
 
 ax1.set_xlabel('Generations', fontsize=14)
 ax1.set_ylabel(r'$p_t^8(d^{(1)},d^{(2)})$', fontsize=14)
 
 chandles = [ax1.plot([], [], color = cmap[pair], label={pair})[0] for pair in pairs]
-handles = [ax1.plot([], [], color='black', linestyle='-', label='ODE')[0], ax1.plot([], [], color='black', linestyle=':', label='Simulation')[0]]
+handles = [ax1.plot([], [], color='black', linestyle='-', label='ODE')[0], ax1.plot([], [], color='black', marker='x', linestyle='None', label='Simulation')[0]]
 
 legend1 = ax1.legend(handles=chandles, loc='lower center', title=r'$(d^{(1)}, d^{(2)})$', bbox_to_anchor=(0.5, -0.35), ncol=5, fontsize=13, title_fontsize=14)
 ax1.add_artist(legend1)

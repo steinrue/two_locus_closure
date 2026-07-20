@@ -14,7 +14,8 @@ initialStates = [(2,0,0), (0,2,0), (0,0,2), (2,2,2)]
 order = 8
 time = np.linspace(0,2000,200)
 numGenerations = 2000
-numReplicates = 8192
+# 2^{18} simulated replicates for simulated trajectories
+numReplicates = 262144
 numGeneticTypes = 4
 
 # IC Lists
@@ -26,9 +27,9 @@ allScenarios = {
     'nolow.noLD' : {'x0' : [0.25, 0.25, 0.25, 0.25]},
     'nolow.LD' : {'x0' : [0.4, 0.1, 0.1, 0.4]},
     'onelow.noLD' : {'x0' : [0.025, 0.025, 0.475, 0.475]},
-    'onelow.LD' : {'x0' : [0.04, 0.01, 0.46, 0.49]},
+    'onelow.LD' : {'x0' : [0.05, 0.0, 0.45, 0.5]},
     'bothlow.noLD' : {'x0' : [0.0025, 0.0475, 0.0475, 0.9025]},
-    'bothlow.LD' : {'x0' : [0.00375, 0.04625, 0.04625, 0.90375]}
+    'bothlow.LD' : {'x0' : [0.05, 0.0, 0.0, 0.95]}
 }
 # Population size parameters to generate msprime demographies and ODE/Simulation populations
 constantSize = 2000
